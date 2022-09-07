@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -10,6 +11,26 @@ st.set_page_config(
 )
 
 st.title("随机变量")
+
+plotly_layout = go.Layout(
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    xaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.5)"),
+    yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.25)"),
+    margin=go.layout.Margin(
+        l=0,
+        r=0,
+        b=0,
+        t=0,
+    ),
+    legend=dict(
+        orientation="h",
+        xanchor="center",
+        yanchor="top",
+        x=0.5,
+        y=-0.05,
+    ),
+)
 
 C1, C2, C3 = st.tabs(
     [
@@ -80,20 +101,30 @@ with C2:
     st.latex(f"P({a} \\leq X \\leq {b}) = {stats.norm.cdf(b) - stats.norm.cdf(a):.4f}")
     x_plot = np.linspace(-5, 5, 1000)
     y_plot = stats.norm.pdf(x_plot)
-    fig = plt.figure()
-    plt.plot(x_plot, y_plot)
-    plt.fill_between(
-        x_plot,
-        y_plot,
-        where=(x_plot >= a) & (x_plot <= b),
-        color="tab:blue",
-        alpha=0.5,
-        label=f"$S={stats.norm.cdf(b) - stats.norm.cdf(a):.4f}$",
+
+    fig = go.Figure(layout=plotly_layout)
+    fig.add_trace(
+        go.Scatter(
+            x=x_plot[(x_plot >= a) & (x_plot <= b)],
+            y=y_plot[(x_plot >= a) & (x_plot <= b)],
+            mode="lines",
+            name=f"S={stats.norm.cdf(b) - stats.norm.cdf(a):.4f}",
+            fill="tozeroy",
+            line=dict(color="#00aaff"),
+        )
     )
-    plt.yticks([])
-    plt.legend()
-    plt.tight_layout()
-    st.pyplot(fig)
+    fig.add_trace(
+        go.Scatter(
+            x=x_plot,
+            y=y_plot,
+            mode="lines",
+            name="概率密度函数",
+            # fill="tozeroy"
+            line=dict(color="#00aaff"),
+        )
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
     "如果你尝试了把a和b调到一起，你会发现，这时候的概率就是 0 了，也就意味着单点的概率为 0！听起来不是很妙，因为我们知道实际生活中这样的值是有可能出现的，那么我们要怎么来描述这样的值出现的概率呢？"
     "这就是我们需要对概率的描述进行更细致的定义，比如在离散的情况下我们可以说成是"
     st.latex(r"P(X=1)=...")
@@ -116,20 +147,29 @@ with C2:
         )
         + f"= {min(stats.norm.cdf(x),1-stats.norm.cdf(x)):.4f}"
     )
-    fig = plt.figure()
-    plt.plot(x_plot, y_plot, color="tab:blue")
-    plt.plot(x, stats.norm.pdf(x), "o", color="tab:blue")
-    plt.fill_between(
-        x_plot,
-        y_plot,
-        where=(x_plot <= x) if x <= 0 else (x_plot >= x),
-        color="tab:blue",
-        alpha=0.5,
-        label=f"$S={min(stats.norm.cdf(x),1-stats.norm.cdf(x)):.4f}$",
+
+    fig = go.Figure(layout=plotly_layout)
+    fig.add_trace(
+        go.Scatter(
+            x=x_plot[(x_plot <= x) if x <= 0 else (x_plot >= x)],
+            y=y_plot[(x_plot <= x) if x <= 0 else (x_plot >= x)],
+            mode="lines",
+            name=f"S={min(stats.norm.cdf(x),1-stats.norm.cdf(x)):.4f}",
+            fill="tozeroy",
+            line=dict(color="#00aaff"),
+        )
     )
-    plt.yticks([])
-    plt.legend()
-    st.pyplot(fig)
+    fig.add_trace(
+        go.Scatter(
+            x=x_plot,
+            y=y_plot,
+            mode="lines",
+            name="概率密度函数",
+            # fill="tozeroy"
+            line=dict(color="#00aaff"),
+        )
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
 with C3:
     st.subheader("常见分布")
@@ -213,64 +253,72 @@ with C3:
     means = samples.mean(axis=0)
     stds = samples.std(axis=0)
     kernel = stats.gaussian_kde(means)
-    fig = plt.figure()
-    plt.plot(x_plot, kernel(x_plot), color="tab:cyan")
-    plt.fill_between(
-        x_plot,
-        kernel(x_plot),
-        color="tab:cyan",
-        alpha=0.5,
-        label="Distribution of mean values",
+
+    fig = go.Figure(layout=plotly_layout)
+    fig.add_trace(
+        go.Scatter(
+            x=x_plot,
+            y=kernel(x_plot),
+            mode="lines",
+            name="概率密度函数",
+            fill="tozeroy",
+            line=dict(color="#00aaff"),
+        )
     )
-    plt.axvline(
-        dist.mean(),
-        color="tab:red",
-        alpha=0.75,
-        label="True mean",
+    fig.add_trace(
+        go.Scatter(
+            x=[means.mean()] * 2,
+            y=[0, kernel(means.mean())[0]],
+            mode="lines",
+            line=dict(color="#00aaff", width=3, dash="dash"),
+            name="样本均值的均值",
+        )
     )
-    plt.vlines(
-        means.mean(),
-        0,
-        kernel(means.mean()),
-        color="tab:blue",
-        alpha=0.75,
-        label="Mean of sample means",
+    fig.add_trace(
+        go.Scatter(
+            x=[dist.mean()] * 2,
+            y=[0, kernel(x_plot).max()],
+            mode="lines",
+            line=dict(color="purple", width=2, dash="dash"),
+            name="真实均值",
+        )
     )
-    plt.xticks([])
-    plt.yticks([])
-    plt.legend()
-    plt.tight_layout()
-    st.pyplot(fig)
+    st.plotly_chart(fig, use_container_width=True)
+
     "当然样本的标准差也有类似的估计"
     kernel = stats.gaussian_kde(stds)
-    fig = plt.figure()
-    plt.plot(x_plot, kernel(x_plot), color="tab:cyan")
-    plt.fill_between(
-        x_plot,
-        0,
-        kernel(x_plot),
-        color="tab:cyan",
-        alpha=0.5,
-        label="Distribution of std values",
+
+    fig = go.Figure(layout=plotly_layout)
+    fig.add_trace(
+        go.Scatter(
+            x=x_plot,
+            y=kernel(x_plot),
+            mode="lines",
+            name="概率密度函数",
+            fill="tozeroy",
+            line=dict(color="#00aaff"),
+        )
     )
-    plt.axvline(
-        dist.std(),
-        color="tab:red",
-        alpha=0.75,
-        label="True std",
+    fig.add_trace(
+        go.Scatter(
+            x=[stds.mean()] * 2,
+            y=[0, kernel(stds.mean())[0]],
+            mode="lines",
+            line=dict(color="#00aaff", width=3, dash="dash"),
+            name="样本标准差的均值",
+        )
     )
-    plt.vlines(
-        stds.mean(),
-        0,
-        kernel(stds.mean()),
-        color="tab:blue",
-        alpha=0.75,
-        label="Mean of sample stds",
+    fig.add_trace(
+        go.Scatter(
+            x=[dist.std()] * 2,
+            y=[0, kernel(x_plot).max()],
+            mode="lines",
+            line=dict(color="purple", width=2, dash="dash"),
+            name="真实标准差",
+        )
     )
-    plt.xticks([])
-    plt.yticks([])
-    plt.legend()
-    st.pyplot(fig)
+    st.plotly_chart(fig, use_container_width=True)
+
     "对于样本均值，比较有意思的一点是，随着抽样次数的增加，样本均值的分布趋向于一个固定的分布"
     kernel = stats.gaussian_kde(means)
     X = np.linspace(dist.mean() - 3 * dist.std(), dist.mean() + 3 * dist.std(), 2500)
