@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
@@ -41,7 +41,7 @@ C1, C2, C3 = st.tabs(
 )
 
 if st.button("再来一次"):
-    st.experimental_rerun()
+    pass
 
 with C1:
     "从抛硬币开始，假设我们有一枚均匀的硬币，那么抛十次的结果可能是如下这样："
