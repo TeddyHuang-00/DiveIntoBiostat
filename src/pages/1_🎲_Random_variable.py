@@ -110,7 +110,7 @@ with C2:
             mode="lines",
             name=f"S={stats.norm.cdf(b) - stats.norm.cdf(a):.4f}",
             fill="tozeroy",
-            line=dict(color="#00aaff"),
+            line=dict(color="deepskyblue"),
         )
     )
     fig.add_trace(
@@ -120,7 +120,7 @@ with C2:
             mode="lines",
             name="概率密度函数",
             # fill="tozeroy"
-            line=dict(color="#00aaff"),
+            line=dict(color="deepskyblue"),
         )
     )
     st.plotly_chart(fig, use_container_width=True)
@@ -156,7 +156,7 @@ with C2:
             mode="lines",
             name=f"S={min(stats.norm.cdf(x),1-stats.norm.cdf(x)):.4f}",
             fill="tozeroy",
-            line=dict(color="#00aaff"),
+            line=dict(color="deepskyblue"),
         )
     )
     fig.add_trace(
@@ -166,7 +166,7 @@ with C2:
             mode="lines",
             name="概率密度函数",
             # fill="tozeroy"
-            line=dict(color="#00aaff"),
+            line=dict(color="deepskyblue"),
         )
     )
     st.plotly_chart(fig, use_container_width=True)
@@ -262,7 +262,7 @@ with C3:
             mode="lines",
             name="概率密度函数",
             fill="tozeroy",
-            line=dict(color="#00aaff"),
+            line=dict(color="deepskyblue"),
         )
     )
     fig.add_trace(
@@ -270,7 +270,7 @@ with C3:
             x=[means.mean()] * 2,
             y=[0, kernel(means.mean())[0]],
             mode="lines",
-            line=dict(color="#00aaff", width=3, dash="dash"),
+            line=dict(color="deepskyblue", width=3, dash="dash"),
             name="样本均值的均值",
         )
     )
@@ -279,7 +279,7 @@ with C3:
             x=[dist.mean()] * 2,
             y=[0, kernel(x_plot).max()],
             mode="lines",
-            line=dict(color="purple", width=2, dash="dash"),
+            line=dict(color="deeppink", width=2, dash="dash"),
             name="真实均值",
         )
     )
@@ -296,7 +296,7 @@ with C3:
             mode="lines",
             name="概率密度函数",
             fill="tozeroy",
-            line=dict(color="#00aaff"),
+            line=dict(color="deepskyblue"),
         )
     )
     fig.add_trace(
@@ -304,7 +304,7 @@ with C3:
             x=[stds.mean()] * 2,
             y=[0, kernel(stds.mean())[0]],
             mode="lines",
-            line=dict(color="#00aaff", width=3, dash="dash"),
+            line=dict(color="deepskyblue", width=3, dash="dash"),
             name="样本标准差的均值",
         )
     )
@@ -313,7 +313,7 @@ with C3:
             x=[dist.std()] * 2,
             y=[0, kernel(x_plot).max()],
             mode="lines",
-            line=dict(color="purple", width=2, dash="dash"),
+            line=dict(color="deeppink", width=2, dash="dash"),
             name="真实标准差",
         )
     )

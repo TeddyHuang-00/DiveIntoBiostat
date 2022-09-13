@@ -254,7 +254,7 @@ with C3:
             mode="lines",
             name="零假设分布",
             # fill="tozeroy"
-            line=dict(color="#00aaff"),
+            line=dict(color="deepskyblue"),
         )
     )
     fig.add_trace(
@@ -264,7 +264,7 @@ with C3:
             mode="lines",
             name=f"第一类错误",
             fill="tozeroy",
-            line=dict(color="#00aaff"),
+            line=dict(color="deepskyblue"),
         )
     )
     fig.add_trace(
@@ -274,7 +274,7 @@ with C3:
             mode="lines",
             name=f"备选假设分布",
             # fill="tozeroy",
-            line=dict(color="#00ffaa"),
+            line=dict(color="mediumspringgreen"),
         )
     )
     fig.add_trace(
@@ -284,7 +284,7 @@ with C3:
             mode="lines",
             name=f"第二类错误",
             fill="tozeroy",
-            line=dict(color="#00ffaa"),
+            line=dict(color="mediumspringgreen"),
         )
     )
     fig.add_trace(
@@ -292,7 +292,7 @@ with C3:
             x=[alpha] * 2,
             y=[0, max(H0_dist.pdf(alpha), H1_dist.pdf(alpha))],
             mode="lines",
-            line=dict(color="#ff55cc", width=3, dash="dash"),
+            line=dict(color="deeppink", width=3, dash="dash"),
             name="显著性水平",
         )
     )
