@@ -162,13 +162,12 @@ with C2:
         if lang == "Python":
             st.code(
                 f"""
-# Python
 from scipy import stats
 
 stats.ttest_ind(
-    A, # A 人群样本
-    B, # B 人群样本
-    equal_var=False, # 假设方差不等
+    A,                  # A 人群样本
+    B,                  # B 人群样本
+    equal_var=False,    # 假设方差不等
     alternative="{(
         "two-sided"
         if test_choice == 1
@@ -176,7 +175,7 @@ stats.ttest_ind(
         if test_choice == 2
         else "greater"
     )}", # 备选假设 {neg_options[test_choice]}
-).pvalue # 取结果中这个神秘的 P 值
+).pvalue                # 取结果中这个神秘的 P 值
 """
             )
         else:
@@ -184,9 +183,9 @@ stats.ttest_ind(
             st.code(
                 f"""
 t.test(
-    A, # A 人群样本
-    B, # B 人群样本
-    var.equal = FALSE, # 假设方差不等，默认
+    A,                  # A 人群样本
+    B,                  # B 人群样本
+    var.equal = FALSE,  # 假设方差不等，默认
     alternative="{(
         "two.sided"
         if test_choice == 1
@@ -194,7 +193,7 @@ t.test(
         if test_choice == 2
         else "greater"
     )}", # 备选假设 {neg_options[test_choice]}
-)$p.value # 取结果中这个神秘的 P 值
+)$p.value               # 取结果中这个神秘的 P 值
 """,
                 language="r",
             )
