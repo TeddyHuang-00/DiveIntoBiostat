@@ -148,12 +148,10 @@ with C1:
     fig.update_layout(
         {
             "xaxis": {
-                # "showgrid": False,
                 "showticklabels": False,
                 "visible": False,
             },
             "yaxis": {
-                # "showgrid": False,
                 "showticklabels": False,
                 "visible": False,
             },
@@ -314,7 +312,6 @@ stats.f_oneway(
 """
         )
     else:
-        "- R 语言"
         st.code(
             f"""
 aov(

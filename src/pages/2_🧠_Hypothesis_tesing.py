@@ -1,11 +1,8 @@
-# import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
 from scipy import stats
 import streamlit as st
-
-# from scipy.special import comb
 
 st.set_page_config(
     page_title="假设检验",
@@ -179,7 +176,6 @@ stats.ttest_ind(
 """
             )
         else:
-            "- R 语言"
             st.code(
                 f"""
 t.test(
@@ -253,7 +249,6 @@ with C3:
             y=H0_dist.pdf(X_plot),
             mode="lines",
             name="零假设分布",
-            # fill="tozeroy"
             line=dict(color="deepskyblue"),
         )
     )
@@ -273,7 +268,6 @@ with C3:
             y=H1_dist.pdf(X_plot),
             mode="lines",
             name=f"备选假设分布",
-            # fill="tozeroy",
             line=dict(color="mediumspringgreen"),
         )
     )

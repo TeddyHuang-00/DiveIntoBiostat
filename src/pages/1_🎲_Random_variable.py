@@ -1,4 +1,3 @@
-# import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
@@ -119,7 +118,6 @@ with C2:
             y=y_plot,
             mode="lines",
             name="概率密度函数",
-            # fill="tozeroy"
             line=dict(color="deepskyblue"),
         )
     )
@@ -165,7 +163,6 @@ with C2:
             y=y_plot,
             mode="lines",
             name="概率密度函数",
-            # fill="tozeroy"
             line=dict(color="deepskyblue"),
         )
     )
