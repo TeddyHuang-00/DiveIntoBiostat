@@ -301,7 +301,7 @@ with C3:
             st.dataframe(pd.DataFrame(Ks, columns=pH))
 
     "好了，我们来写点代码来完成这一步骤吧！"
-    lang = st.radio("选择语言", ["Python", "R 语言"])
+    lang = st.radio("选择语言", ["Python", "R 语言"], horizontal=True)
     if lang == "Python":
         st.code(
             f"""

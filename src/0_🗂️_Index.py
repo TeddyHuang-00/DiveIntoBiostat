@@ -17,7 +17,7 @@ with st.expander("Tips"):
 
     st.checkbox("或者勾选一些复选框", True)
 
-    st.radio("或者选择一些单选框", ["🌝", "🌚"])
+    st.radio("或者选择一些单选框", ["🌝", "🌚"], horizontal=True)
 
     st.text_input("你也可以在这里输入一些文字", "点我编辑")
 
